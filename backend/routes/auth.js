@@ -4,17 +4,17 @@ const Joi = require("joi");
 const validateRequest = require("../middleware/validate-request");
 const authCtrl = require("../controllers/auth");
 
-router.post("/signup", createSchema, create);
+router.post("/signup", signupSchema, signup);
 
 module.exports = router;
 
-function create(req, res, next) {
+function signup(req, res, next) {
     authCtrl.signup(req.body)
         .then(() => res.json({ message: 'User created' }))
         .catch(next);
 }
 
-function createSchema(req, res, next) {
+function signupSchema(req, res, next) {
     const schema = Joi.object({
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
