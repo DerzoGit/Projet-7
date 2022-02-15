@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 
-function model(sequelize) {
+function userModel(sequelize) {
     const attributes = {
         firstName: { type: DataTypes.STRING, allowNull: false },
         lastName: { type: DataTypes.STRING, allowNull: false }, 
@@ -12,4 +12,4 @@ function model(sequelize) {
     return sequelize.define("User", attributes);
 }
 
-module.exports = model;
+module.exports = userModel;
