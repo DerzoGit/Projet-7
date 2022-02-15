@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 
-function model(sequelize) {
+function postModel(sequelize) {
     const attributes = {
         title: { type: DataTypes.STRING, allowNull: true, defaultValue: null },
         content: { type: DataTypes.TEXT, allowNull: false }, 
@@ -10,4 +10,4 @@ function model(sequelize) {
     return sequelize.define("Post", attributes);
 }
 
-module.exports = model;
+module.exports = postModel;
