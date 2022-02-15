@@ -15,7 +15,7 @@ function initialize() {
     const sequelize = new Sequelize(database, user, password, { dialect: "mysql" });
 
     db.User = require("../models/user")(sequelize);
-    // db.Post = require()(sequelize);
+    db.Post = require("../models/post")(sequelize);
     // db.Comment = require()(sequelize);
 
     sequelize.sync({ alter: true });
