@@ -1,21 +1,23 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+const { Sequelize, Model, DataTypes } = require("sequelize");
+const sequelize = require("../config/db");
+
 class User extends Model {
-    static associate (models){
-    models.User.hasMany(models.Post)
+    associate(models) {
+        User.hasMany(models.Post);
     }
 }
 
 User.init({
-    firstName: { type: Sequelize.DataTypes.STRING, allowNull: false },
-    lastName: { type: Sequelize.DataTypes.STRING, allowNull: false }, 
-    email: { type: Sequelize.DataTypes.STRING, allowNull: false },
-    passwordHash: { type: Sequelize.DataTypes.STRING, allowNull: false },
-    role: { type: Sequelize.DataTypes.STRING, allowNull: false, defaultValue: "User" }
+    firstName: { type: DataTypes.STRING, allowNull: false },
+    lastName: { type: DataTypes.STRING, allowNull: false }, 
+    email: { type: DataTypes.STRING, allowNull: false },
+    passwordHash: { type: DataTypes.STRING, allowNull: false },
+    role: { type: DataTypes.STRING, allowNull: false, defaultValue: "User" }
 }, {
     sequelize,
-    modelName:"users"
-})
+    modelName: "User",
+    tableName: "users",
+    timestamps: true
+});
 
-return User;
-}
+module.exports = User;
