@@ -1,20 +1,22 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+const { Sequelize, Model, DataTypes } = require("sequelize");
+const sequelize = require("../config/db");
+
 class Post extends Model {
-    static associate (models){
-    models.Post.belongsTo(models.User, { foreignKey: "userId" })
+    static associate(models) {
+        Post.belongsTo(models.User, { foreignKey: "userId" });
     }
-}
+};
 
 Post.init({
-    userId: { type: Sequelize.DataTypes.INTEGER, allowNull: true },
-    title: { type: Sequelize.DataTypes.STRING, allowNull: true, defaultValue: null },
-    content: { type: Sequelize.DataTypes.TEXT, allowNull: false }, 
-    media: { type: Sequelize.DataTypes.STRING, allowNull: true, defaultValue: null }
+    userId: { type: DataTypes.INTEGER, allowNull: false },
+    title: { type: DataTypes.STRING, allowNull: true, defaultValue: null },
+    content: { type: DataTypes.TEXT, allowNull: false }, 
+    media: { type: DataTypes.STRING, allowNull: true, defaultValue: null }
 }, {
     sequelize,
-    modelName:"posts"
-})
+    modelName: "Post",
+    tableName: "posts",
+    timestamps: true
+});
 
-return Post;
-}
+module.exports = Post;
