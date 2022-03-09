@@ -1,5 +1,6 @@
 // Package qui créé les token et les vérifie pour la connexion
 const jwt = require("jsonwebtoken");
+// const User = require("../models/user");
 
 // Middleware qui permet de récupérer le token, de le vérifier ainsi que de décoder le token. S'il est différent, l'utilisateur n'est pas authentifié, sinon le contrôle est passé 
 module.exports = (req, res, next) => {
@@ -10,6 +11,11 @@ module.exports = (req, res, next) => {
         if (req.body.userId && req.body.userId !== userId) {
             throw "User ID non valide !";
         } else {
+            // User.findOne({ where: { id: userId } })
+            // .then(user => {
+            //     req.user = user
+            //     next()
+            // })
             next();
         }
     } catch (error) {
