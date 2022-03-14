@@ -4,6 +4,7 @@ const sequelize = require("../config/db");
 class User extends Model {
     associate(models) {
         User.hasMany(models.Post);
+        User.hasMany(models.Comment);
     }
 }
 
