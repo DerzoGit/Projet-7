@@ -3,8 +3,8 @@ const sequelize = require("../config/db");
 
 class Post extends Model {
     static associate(models) {
-        Post.belongsTo(models.User, { foreignKey: "userId" });
-        Post.hasMany(models.Comment);
+        Post.belongsTo(models.User, { foreignKey: "userId" }, { onDelete: "cascade" });
+        Post.hasMany(models.Comment, { onDelete: "cascade" });
     }
 };
 
