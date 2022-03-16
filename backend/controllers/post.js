@@ -1,11 +1,11 @@
-// const db = require("../config/db");
 const Post = require("../models/post");
-// const User = require("../models/user");
+const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
     const postObject = req.body;
     const post = new Post({
-        ...postObject
+        ...postObject,
+        media: (req.file ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : null)
     });
     post.save()
     .then(() => res.status(201).json({ message: "Le post a bien été créé" }))
