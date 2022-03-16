@@ -14,7 +14,9 @@ exports.createPost = (req, res, next) => {
 
 
 exports.updatePost = (req, res, next) => {
-    const postObject = req.body;
+    const postObject = req.file ? { 
+        ...req.body, media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}` 
+    } : { ...req.body };
 
     Post.update({ ...postObject, id: req.params.id}, { where: {id: req.params.id} })
     .then(() => res.status(200).json({ message: "Le post a bien été modifié" }))
