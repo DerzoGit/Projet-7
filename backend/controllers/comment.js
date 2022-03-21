@@ -1,9 +1,11 @@
 const Comment = require("../models/comment");
+const fs = require("fs");
 
 exports.createComment = (req, res, next) => {
     const commentObject = req.body;
     const comment = new Comment({
-        ...commentObject
+        ...commentObject,
+        media: (req.file ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : null)
     });
     comment.save()
     .then(() => res.status(201).json({ message: "Le commentaire a bien été posté" }))
@@ -12,7 +14,9 @@ exports.createComment = (req, res, next) => {
 
 
 exports.updateComment = (req, res, next) => {
-    const commentObject = req.body;
+    const commentObject = req.file ? { 
+        ...req.body, media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}` 
+    } : { ...req.body };
 
     Comment.update({ ...commentObject, id: req.params.id}, { where: {id: req.params.id} })
     .then(() => res.status(200).json({ message: "Le commentaire a bien été modifié" }))
@@ -21,9 +25,16 @@ exports.updateComment = (req, res, next) => {
 
 
 exports.deleteComment = (req, res, next) => {
-    Comment.destroy({ where: {id: req.params.id} })
-    .then(() => res.status(200).json({ message: "Le commentaire a bien été supprimé" }))
-    .catch(error => res.status(400).json({ error }))
+    Comment.findOne({ where: {id: req.params.id }})
+    .then(post => {
+        const filename = post.media.split("/images/")[1]
+        fs.unlink(`images/${filename}`, () => {
+            Comment.destroy({ where: {id: req.params.id} })
+            .then(() => res.status(200).json({ message: "Le commentaire a bien été supprimé" }))
+            .catch(error => res.status(400).json({ error }))
+        })
+    })
+    .catch(error => res.status(500).json({ error }))
 }
 
 
