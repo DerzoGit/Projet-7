@@ -27,12 +27,19 @@ exports.updateComment = (req, res, next) => {
 exports.deleteComment = (req, res, next) => {
     Comment.findOne({ where: {id: req.params.id }})
     .then(post => {
-        const filename = post.media.split("/images/")[1]
-        fs.unlink(`images/${filename}`, () => {
+        if (comment.media) {
+            const filename = post.media.split("/images/")[1]
+            fs.unlink(`images/${filename}`, () => {
+                Comment.destroy({ where: {id: req.params.id} })
+                .then(() => res.status(200).json({ message: "Le commentaire a bien été supprimé" }))
+                .catch(error => res.status(400).json({ error }))
+            })
+        } else {
             Comment.destroy({ where: {id: req.params.id} })
             .then(() => res.status(200).json({ message: "Le commentaire a bien été supprimé" }))
             .catch(error => res.status(400).json({ error }))
-        })
+        }
+        
     })
     .catch(error => res.status(500).json({ error }))
 }
