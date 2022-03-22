@@ -27,12 +27,19 @@ exports.updatePost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
     Post.findOne({ where: {id: req.params.id }})
     .then(post => {
-        const filename = post.media.split("/images/")[1]
-        fs.unlink(`images/${filename}`, () => {
+        if (post.media) {
+            const filename = post.media.split("/images/")[1]
+            fs.unlink(`images/${filename}`, () => {
+                Post.destroy({ where: {id: req.params.id} })
+                .then(() => res.status(200).json({ message: "Le post a bien été supprimé" }))
+                .catch(error => res.status(400).json({ error }))
+        })
+        } else {
             Post.destroy({ where: {id: req.params.id} })
             .then(() => res.status(200).json({ message: "Le post a bien été supprimé" }))
             .catch(error => res.status(400).json({ error }))
-        })
+        }
+        
     })
     .catch(error => res.status(500).json({ error }))
 }
