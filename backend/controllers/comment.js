@@ -25,13 +25,13 @@ exports.updateComment = (req, res, next) => {
 
 
 exports.deleteComment = (req, res, next) => {
-    const userId = 3;
-    const userRole = User.findOne({ where: { id: userId }});
+    const userId = req.auth.userId;
+    const role = req.auth.role;
     Comment.findOne({ where: {id: req.params.id }})
-    .then(post => {
-        if (userId === comment.userId || userRole.admin === true) {
+    .then(comment => {
+        if (userId === comment.userId || role === "Admin") {
             if (comment.media) {
-                const filename = post.media.split("/images/")[1]
+                const filename = comment.media.split("/images/")[1]
                 fs.unlink(`images/${filename}`, () => {
                     Comment.destroy({ where: {id: req.params.id} })
                     .then(() => res.status(200).json({ message: "Le commentaire a bien été supprimé" }))
