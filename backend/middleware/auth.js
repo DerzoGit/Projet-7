@@ -8,14 +8,11 @@ module.exports = (req, res, next) => {
         const token = req.headers.authorization.split(" ")[1];
         const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
         const userId = decodedToken.userId;
+        const role = decodedToken.role;
+        req.auth = { userId, role };
         if (req.body.userId && req.body.userId !== userId) {
             throw "User ID non valide !";
         } else {
-            // User.findOne({ where: { id: userId } })
-            // .then(user => {
-            //     req.user = user
-            //     next()
-            // })
             next();
         }
     } catch (error) {
