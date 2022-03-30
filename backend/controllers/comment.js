@@ -25,21 +25,26 @@ exports.updateComment = (req, res, next) => {
 
 
 exports.deleteComment = (req, res, next) => {
+    const userId = 3;
+    const userRole = User.findOne({ where: { id: userId }});
     Comment.findOne({ where: {id: req.params.id }})
     .then(post => {
-        if (comment.media) {
-            const filename = post.media.split("/images/")[1]
-            fs.unlink(`images/${filename}`, () => {
+        if (userId === comment.userId || userRole.admin === true) {
+            if (comment.media) {
+                const filename = post.media.split("/images/")[1]
+                fs.unlink(`images/${filename}`, () => {
+                    Comment.destroy({ where: {id: req.params.id} })
+                    .then(() => res.status(200).json({ message: "Le commentaire a bien été supprimé" }))
+                    .catch(error => res.status(400).json({ error }))
+                })
+            } else {
                 Comment.destroy({ where: {id: req.params.id} })
                 .then(() => res.status(200).json({ message: "Le commentaire a bien été supprimé" }))
                 .catch(error => res.status(400).json({ error }))
-            })
+            }
         } else {
-            Comment.destroy({ where: {id: req.params.id} })
-            .then(() => res.status(200).json({ message: "Le commentaire a bien été supprimé" }))
-            .catch(error => res.status(400).json({ error }))
+            res.status(400).json({ message: "Vous n'avez pas les autorisations nécessaires." })
         }
-        
     })
     .catch(error => res.status(500).json({ error }))
 }
