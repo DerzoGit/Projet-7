@@ -14,13 +14,25 @@ exports.createPost = (req, res, next) => {
 
 
 exports.updatePost = (req, res, next) => {
-    const postObject = req.file ? { 
-        ...req.body, media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}` 
-    } : { ...req.body };
+    const userId = req.auth.userId;
 
-    Post.update({ ...postObject, id: req.params.id}, { where: {id: req.params.id} })
-    .then(() => res.status(200).json({ message: "Le post a bien été modifié" }))
-    .catch(error => res.status(400).json({ error }))
+    Post.findOne({ where: {id: req.params.id }})
+    .then(post => {
+        if (userId === post.userId) {
+        
+            const postObject = req.file ? { 
+            ...req.body, media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}` 
+        } : { ...req.body };
+            Post.update({ ...postObject, id: req.params.id}, { where: {id: req.params.id} })
+            .then(() => res.status(200).json({ message: "Le post a bien été modifié" }))
+            .catch(error => res.status(400).json({ error }))
+        } else {
+            console.log(typeof userId, typeof post.userId)
+            res.status(400).json({ message: "Vous n'avez pas les autorisations nécessaires." })
+        }
+    }) 
+    .catch(error => res.status(500).json({ error }))
+    
 }
 
 
@@ -29,7 +41,6 @@ exports.deletePost = (req, res, next) => {
     const role = req.auth.role;
     Post.findOne({ where: {id: req.params.id }})
     .then(post => {
-        console.log(role);
         if (userId === post.userId || role === "Admin") { 
             if (post.media) {
                 const filename = post.media.split("/images/")[1]
