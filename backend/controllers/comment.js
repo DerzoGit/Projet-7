@@ -14,13 +14,24 @@ exports.createComment = (req, res, next) => {
 
 
 exports.updateComment = (req, res, next) => {
-    const commentObject = req.file ? { 
-        ...req.body, media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}` 
-    } : { ...req.body };
+    const userId = req.auth.userId;
 
-    Comment.update({ ...commentObject, id: req.params.id}, { where: {id: req.params.id} })
-    .then(() => res.status(200).json({ message: "Le commentaire a bien été modifié" }))
-    .catch(error => res.status(400).json({ error }))
+    Comment.findOne({ where: {id: req.params.id }})
+    .then(comment => {
+
+        if (userId === comment.userId) {
+            const commentObject = req.file ? { 
+                ...req.body, media: `${req.protocol}://${req.get("host")}/images/${req.file.filename}` 
+            } : { ...req.body };
+            Comment.update({ ...commentObject, id: req.params.id}, { where: {id: req.params.id} })
+            .then(() => res.status(200).json({ message: "Le commentaire a bien été modifié" }))
+            .catch(error => res.status(400).json({ error }))
+        } else {
+            res.status(400).json({ message: "Vous n'avez pas les autorisations nécessaires." })
+        }
+        
+    })
+    .catch(error => res.status(500).json({ error }))
 }
 
 

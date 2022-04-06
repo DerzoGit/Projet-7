@@ -27,7 +27,6 @@ exports.updatePost = (req, res, next) => {
             .then(() => res.status(200).json({ message: "Le post a bien été modifié" }))
             .catch(error => res.status(400).json({ error }))
         } else {
-            console.log(typeof userId, typeof post.userId)
             res.status(400).json({ message: "Vous n'avez pas les autorisations nécessaires." })
         }
     }) 
