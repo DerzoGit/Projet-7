@@ -1,15 +1,24 @@
-const { DataTypes } = require("sequelize");
+const { Sequelize, Model, DataTypes } = require("sequelize");
+const sequelize = require("../config/db");
 
-function userModel(sequelize) {
-    const attributes = {
-        firstName: { type: DataTypes.STRING, allowNull: false },
-        lastName: { type: DataTypes.STRING, allowNull: false }, 
-        email: { type: DataTypes.STRING, allowNull: false },
-        passwordHash: { type: DataTypes.STRING, allowNull: false },
-        role: { type: DataTypes.STRING, allowNull: false, defaultValue: "User" }
-    };
-
-    return sequelize.define("User", attributes);
+class User extends Model {
+    associate(models) {
+        User.hasMany(models.Post, { onDelete: "cascade" });
+        User.hasMany(models.Comment, { onDelete: "cascade" });
+    }
 }
 
-module.exports = userModel;
+User.init({
+    firstName: { type: DataTypes.STRING, allowNull: false },
+    lastName: { type: DataTypes.STRING, allowNull: false }, 
+    email: { type: DataTypes.STRING, allowNull: false },
+    passwordHash: { type: DataTypes.STRING, allowNull: false },
+    role: { type: DataTypes.STRING, allowNull: false, defaultValue: "User" }
+}, {
+    sequelize,
+    modelName: "User",
+    tableName: "users",
+    timestamps: true
+});
+
+module.exports = User;

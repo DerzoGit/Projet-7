@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const db = require("../config/db");
+const User = require("../models/user");
 // const Joi = require("joi");
 // const validateRequest = require("../middleware/validate-request");
 const jwt = require("jsonwebtoken");
@@ -17,12 +17,12 @@ exports.signup = async (req, res, next) => {
         // validateRequest(req, next, schema);
 
         
-        const user = await db.User.findOne({ where: { email: req.body.email }})
+        const user = await User.findOne({ where: { email: req.body.email }})
         if (user) {
             return res.status(500).json({ message: "Cet email est déjà utilisé "});
         } else {
             const passwordHash = await bcrypt.hash(req.body.password, 10);
-            const userData = new db.User ({
+            const userData = new User ({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
@@ -41,7 +41,7 @@ exports.signup = async (req, res, next) => {
 
 
 exports.login = (req, res, next) => {
-    db.User.findOne({
+    User.findOne({
         where: { email: req.body.email }
     })
     .then(user => {
@@ -55,7 +55,7 @@ exports.login = (req, res, next) => {
                 }
                 res.status(200).json({
                     userId: user.id,
-                    token: jwt.sign({ userId: user.id }, "RANDOM_SECRET_TOKEN", { expiresIn: "24h" })
+                    token: jwt.sign({ userId: user.id, role: user.role }, "RANDOM_TOKEN_SECRET", { expiresIn: "24h" })
                 });
             });
     })

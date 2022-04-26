@@ -1,23 +1,23 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
-class Post extends Model {
+class Comment extends Model {
     static associate(models) {
-        Post.belongsTo(models.User, { foreignKey: "userId" }, { onDelete: "cascade" });
-        Post.hasMany(models.Comment, { onDelete: "cascade" });
+        Comment.belongsTo(models.User, { foreignKey: "userId" }, { onDelete: "cascade" });
+        Comment.belongsTo(models.Post, { foreignKey: "postId" }, { onDelete: "cascade" });
     }
 };
 
-Post.init({
+Comment.init({
     userId: { type: DataTypes.INTEGER, allowNull: false },
-    title: { type: DataTypes.STRING, allowNull: true, defaultValue: null },
+    postId: { type: DataTypes.INTEGER, allowNull: false },
     content: { type: DataTypes.TEXT, allowNull: false }, 
     media: { type: DataTypes.STRING, allowNull: true, defaultValue: null }
 }, {
     sequelize,
-    modelName: "Post",
-    tableName: "posts",
+    modelName: "Comment",
+    tableName: "comments",
     timestamps: true
 });
 
-module.exports = Post;
+module.exports = Comment;
