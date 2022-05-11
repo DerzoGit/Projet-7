@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Bienvenue sur {{ site }}. Connectez-vous !</h1>
+        <h1>Bienvenue sur Groupomania. Connectez-vous !</h1>
         <div>
             <div>
                 <router-link to="/signup">Inscription</router-link> |
@@ -22,20 +22,19 @@
         name: "LoginUser",
         data() {
             return {
-                site: "Groupomania",
                 email: "",
                 password: ""
             }
-        }
-        ,
+        },
         methods: {
             login() {
                 this.axios.post(`http://localhost:3000/api/auth/login`, {
                     email: this.email,
                     password: this.password
                 })
-                .then((response) => {
-                    console.log(response, "response")
+                .then((res) => {
+                    alert("Vous êtes connecté")
+                    console.log(res, res.data.token, "Utilisateur bien connecté")
                 })
                 .catch((error) => {
                     console.log(error, "error")
