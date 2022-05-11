@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Bienvenue sur {{ site }}. Inscrivez-vous !</h1>
+        <h1>Bienvenue sur Groupomania. Inscrivez-vous !</h1>
         <div>
             <div>
                 <router-link to="/signup">Inscription</router-link> |
@@ -26,7 +26,6 @@
         name: "SignUpUser",
         data() {
             return {
-                site: "Groupomania",
                 lastName: "",
                 firstName: "",
                 email: "",
@@ -41,8 +40,10 @@
                     email: this.email,
                     password: this.password
                 })
-                .then((response) => {
-                    console.log(response, "response")
+                .then((res) => {
+                    alert("Votre compte a bien été créé")
+                    this.$router.push("/login")
+                    console.log(res, "Utilisateur bien créé")
                 })
                 .catch((error) => {
                     console.log(error, "error")
