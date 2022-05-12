@@ -54,7 +54,7 @@ exports.deleteComment = (req, res, next) => {
                 .catch(error => res.status(400).json({ error }))
             }
         } else {
-            res.status(400).json({ message: "Vous n'avez pas les autorisations nécessaires." })
+            res.status(401).json({ message: "Vous n'avez pas les autorisations nécessaires." })
         }
     })
     .catch(error => res.status(500).json({ error }))
