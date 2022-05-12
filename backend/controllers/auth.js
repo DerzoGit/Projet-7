@@ -19,7 +19,7 @@ exports.signup = async (req, res, next) => {
         
         const user = await User.findOne({ where: { email: req.body.email }})
         if (user) {
-            return res.status(500).json({ message: "Cet email est déjà utilisé "});
+            return res.status(409).json({ error: "Cet email est déjà utilisé "});
         } else {
             const passwordHash = await bcrypt.hash(req.body.password, 10);
             const userData = new User ({
@@ -35,7 +35,7 @@ exports.signup = async (req, res, next) => {
 
         }
     } catch (error) {
-        return res.status(400).json({ message: "Une erreur est apparue lors de l'inscription "});
+        return res.status(400).json({ error: "Une erreur est apparue lors de l'inscription "});
     }
 }
 
@@ -46,7 +46,7 @@ exports.login = (req, res, next) => {
     })
     .then(user => {
         if (!user) {
-            return res.status(401).json({ error: "Utilisateur non trouvé "});
+            return res.status(404).json({ error: "Utilisateur non trouvé "});
         }
         bcrypt.compare(req.body.password, user.passwordHash)
             .then(valid => {
