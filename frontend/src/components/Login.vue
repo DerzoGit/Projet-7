@@ -12,6 +12,7 @@
                 <label for="password">Mot de Passe :</label>
                 <input type="password" placeholder="Mot de passe" v-model="password">
                 <button type="submit" @click.prevent="login()">Se connecter</button>
+                <p v-if="errorMessage">{{ errorMessage }}</p>
             </form>
         </div>
     </div>
@@ -23,7 +24,8 @@
         data() {
             return {
                 email: "",
-                password: ""
+                password: "",
+                errorMessage: ""
             }
         },
         methods: {
@@ -37,7 +39,8 @@
                     console.log(res, res.data.token, "Utilisateur bien connecté")
                 })
                 .catch((error) => {
-                    console.log(error, "error")
+                    this.errorMessage = error.response.data.error
+                    console.log(error)
                 })
             }
         }
