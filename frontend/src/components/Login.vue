@@ -37,6 +37,9 @@
                 .then((res) => {
                     alert("Vous êtes connecté")
                     console.log(res, res.data.token, "Utilisateur bien connecté")
+                    localStorage.setItem("userToken", res.data.token)
+                    localStorage.setItem("userId", res.data.userId)
+                    this.$router.push("/feed")
                 })
                 .catch((error) => {
                     this.errorMessage = error.response.data.error
