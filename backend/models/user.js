@@ -2,10 +2,10 @@ const { Sequelize, Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
 class User extends Model {
-    associate(models) {
-        User.hasMany(models.Post, { onDelete: "cascade" });
-        User.hasMany(models.Comment, { onDelete: "cascade" });
-    }
+    // associate(models) {
+    //     User.hasMany(models.Post, { onDelete: "cascade" });
+    //     User.hasMany(models.Comment, { onDelete: "cascade" });
+    // }
 }
 
 User.init({
