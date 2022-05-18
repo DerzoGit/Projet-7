@@ -1,4 +1,6 @@
-const Post = require("../models/post");
+// const Post = require("../models/post");
+// const User = require("../models/user");
+const models = require("../models/index")
 const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
@@ -69,7 +71,7 @@ exports.getOnePost = (req, res, next) => {
 
 
 exports.getAllPosts = (req, res, next) => {
-    Post.findAll()
+    models.Post.findAll({ include: [{ model: models.User, attributes: ["firstName", "lastName"] }] })
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({ error }))
 }
