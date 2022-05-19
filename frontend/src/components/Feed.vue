@@ -20,11 +20,12 @@ export default {
             posts: {
                 postId: "",
                 userId: "",
+                firstName: "",
+                lastName: "",
                 title: "",
                 content: "",
                 media: "",
-                createdAt: "",
-                pseudo: ""
+                createdAt: ""
             },
             token: localStorage.getItem("userToken")
         }
