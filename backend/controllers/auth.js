@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
-const User = require("../models/user");
+// const User = require("../models/user");
+const db = require("../models/index");
 // const Joi = require("joi");
 // const validateRequest = require("../middleware/validate-request");
 const jwt = require("jsonwebtoken");
@@ -17,12 +18,12 @@ exports.signup = async (req, res, next) => {
         // validateRequest(req, next, schema);
 
         
-        const user = await User.findOne({ where: { email: req.body.email }})
+        const user = await db.User.findOne({ where: { email: req.body.email }})
         if (user) {
             return res.status(409).json({ error: "Cet email est déjà utilisé "});
         } else {
             const passwordHash = await bcrypt.hash(req.body.password, 10);
-            const userData = new User ({
+            const userData = new db.User ({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
@@ -41,7 +42,7 @@ exports.signup = async (req, res, next) => {
 
 
 exports.login = (req, res, next) => {
-    User.findOne({
+    db.User.findOne({
         where: { email: req.body.email }
     })
     .then(user => {
