@@ -64,7 +64,7 @@ export default {
                     }
                 })
                 .then((res) => {
-                    this.$router.push("/feed")
+                    location.reload()
                     console.log(res, "blbl")
                 })
                 .catch((error) => {
