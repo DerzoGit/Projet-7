@@ -40,6 +40,7 @@
                     localStorage.setItem("userToken", res.data.token)
                     localStorage.setItem("userId", res.data.userId)
                     this.$router.push("/feed")
+                    this.$router.go()
                 })
                 .catch((error) => {
                     this.errorMessage = error.response.data.error
