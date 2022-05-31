@@ -71,7 +71,7 @@ exports.getOnePost = (req, res, next) => {
 
 
 exports.getAllPosts = (req, res, next) => {
-    db.Post.findAll({ include: [{ model: db.User, attributes: ["firstName", "lastName"] }] })
+    db.Post.findAll({ order: [["createdAt", "DESC"]], include: [{ model: db.User, attributes: ["firstName", "lastName"] }] })
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({ error }))
 }
