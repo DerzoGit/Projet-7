@@ -70,7 +70,7 @@ exports.getOneComment = (req, res, next) => {
 
 
 exports.getAllComments = (req, res, next) => {
-    db.Comment.findAll({ include: [{ model: db.User, attributes: ["firstName", "lastName"] }] })
+    db.Comment.findAll({ order: [["createdAt", "DESC"]], include: [{ model: db.User, attributes: ["firstName", "lastName"] }] })
     .then(comments => res.status(200).json(comments))
     .catch(error => res.status(400).json({ error }))
 }
