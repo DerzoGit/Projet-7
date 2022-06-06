@@ -1,22 +1,11 @@
 const bcrypt = require("bcrypt");
 // const User = require("../models/user");
 const db = require("../models/index");
-// const Joi = require("joi");
-// const validateRequest = require("../middleware/validate-request");
 const jwt = require("jsonwebtoken");
 
 exports.signup = async (req, res, next) => {
     
     try {
-        // validate
-        // const schema = Joi.object({
-        // firstName: Joi.string().required(),
-        // lastName: Joi.string().required(),
-        // email: Joi.string().email().required(),
-        // password: Joi.string().min(6).required(),
-        // });
-        // validateRequest(req, next, schema);
-
         
         const user = await db.User.findOne({ where: { email: req.body.email }})
         if (user) {
