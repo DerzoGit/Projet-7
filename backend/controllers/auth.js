@@ -1,28 +1,17 @@
 const bcrypt = require("bcrypt");
-const User = require("../models/user");
-// const Joi = require("joi");
-// const validateRequest = require("../middleware/validate-request");
+const db = require("../models/index");
 const jwt = require("jsonwebtoken");
 
 exports.signup = async (req, res, next) => {
     
     try {
-        // validate
-        // const schema = Joi.object({
-        // firstName: Joi.string().required(),
-        // lastName: Joi.string().required(),
-        // email: Joi.string().email().required(),
-        // password: Joi.string().min(6).required(),
-        // });
-        // validateRequest(req, next, schema);
-
         
-        const user = await User.findOne({ where: { email: req.body.email }})
+        const user = await db.User.findOne({ where: { email: req.body.email }})
         if (user) {
-            return res.status(500).json({ message: "Cet email est déjà utilisé "});
+            return res.status(409).json({ error: "Cet email est déjà utilisé "});
         } else {
             const passwordHash = await bcrypt.hash(req.body.password, 10);
-            const userData = new User ({
+            const userData = new db.User ({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
@@ -35,18 +24,18 @@ exports.signup = async (req, res, next) => {
 
         }
     } catch (error) {
-        return res.status(400).json({ message: "Une erreur est apparue lors de l'inscription "});
+        return res.status(400).json({ error: "Une erreur est apparue lors de l'inscription "});
     }
 }
 
 
 exports.login = (req, res, next) => {
-    User.findOne({
+    db.User.findOne({
         where: { email: req.body.email }
     })
     .then(user => {
         if (!user) {
-            return res.status(401).json({ error: "Utilisateur non trouvé "});
+            return res.status(404).json({ error: "Utilisateur non trouvé "});
         }
         bcrypt.compare(req.body.password, user.passwordHash)
             .then(valid => {
