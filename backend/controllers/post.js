@@ -1,5 +1,3 @@
-// const Post = require("../models/post");
-// const User = require("../models/user");
 const db = require("../models/index")
 const fs = require("fs");
 

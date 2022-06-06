@@ -1,4 +1,3 @@
-// const Comment = require("../models/comment");
 const db = require("../models/index");
 const fs = require("fs");
 
