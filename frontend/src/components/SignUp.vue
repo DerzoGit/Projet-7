@@ -44,7 +44,7 @@
                 })
                 .then((res) => {
                     alert("Votre compte a bien été créé")
-                    this.$router.push("/login")
+                    this.$router.push({ name: "Login" })
                     console.log(res, "Utilisateur bien créé")
                 })
                 .catch((error) => {
