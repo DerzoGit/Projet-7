@@ -39,7 +39,7 @@
                     console.log(res, res.data.token, "Utilisateur bien connecté")
                     localStorage.setItem("userToken", res.data.token)
                     localStorage.setItem("userId", res.data.userId)
-                    this.$router.push("/feed")
+                    this.$router.push({ name: "Feed" })
                     this.$router.go()
                 })
                 .catch((error) => {
