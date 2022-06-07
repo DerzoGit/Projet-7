@@ -23,9 +23,9 @@ exports.checkName = (req, res, next) => {
     const nameRegex = /^[a-zA-ZÀ-ÿ .,'-]+$/
     const firstName = req.body.firstName
     const lastName = req.body.lastName
-    if(nameRegex.test(firstName) === true || nameRegex.test(lastName) === true) {
+    if(nameRegex.test(firstName) === true && nameRegex.test(lastName) === true) {
         next()
     } else {
-        return res.status(400).json({ error: "Veuillez vérifier le format de votre nom et de votre prénom" })
+        return res.status(400).json({ error: "Veuillez vérifier le format de votre nom et de votre prénom, ils ne peuvent contenir de chiffres." })
     }
 }
