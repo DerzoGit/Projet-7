@@ -26,14 +26,14 @@ export default {
     },
     methods: {
         addMedia(e) {
-            this.newPost.media = e.target.files[0];
+            this.media = e.target.files[0];
         },
         createPost() {
             const postForm = new FormData()
             postForm.append("userId", this.userId)
-            postForm.append("title", this.newPost.title)
-            postForm.append("content", this.newPost.content)
-            postForm.append("media", this.newPost.media)
+            postForm.append("title", this.title)
+            postForm.append("content", this.content)
+            postForm.append("media", this.media)
             this.axios.post(`http://localhost:3000/api/post/`, postForm, {
                     headers: {
                         Authorization: `Bearer ${this.token}`,
