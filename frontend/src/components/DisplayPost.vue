@@ -6,6 +6,7 @@
             <p>{{ post.title }}</p>
             <p>{{ post.content }}</p>
             <img :src="post.media">
+            <button v-if="userId == post.userId" @click.prevent="deletePost(post.id)">Supprimer</button>
         </div>
     </div>
 </template>
@@ -22,6 +23,9 @@ export default {
     },
     methods: {
         displayPost() {
+            if(!this.token) {
+                this.$router.push({ name: "Login" })
+            } else {
             this.axios.get(`http://localhost:3000/api/post/`, {
                 headers: {
                     Authorization: `Bearer ${this.token}`
@@ -29,6 +33,20 @@ export default {
             })
             .then((res) => {
                 this.posts = res.data
+                console.log(res)
+            })
+            .catch((error) => {
+                console.log(error)
+            })}
+        },
+        deletePost(id) {
+            this.axios.delete(`http://localhost:3000/api/post/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then((res) => {
+                location.reload()
                 console.log(res)
             })
             .catch((error) => {
