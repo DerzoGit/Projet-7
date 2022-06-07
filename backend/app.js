@@ -12,7 +12,7 @@ const commentRoutes = require("./routes/comment");
 
 app.use(cors());
 app.use(express.json());
-app.use(helmet());
+app.use(helmet({crossOriginResourcePolicy: false}));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/api/auth", authRoutes);
