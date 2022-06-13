@@ -39,6 +39,7 @@
                     console.log(res, res.data.token, "Utilisateur bien connecté")
                     localStorage.setItem("userToken", res.data.token)
                     localStorage.setItem("userId", res.data.userId)
+                    localStorage.setItem("userRole", res.data.userRole)
                     this.$router.push({ name: "Feed" })
                     this.$router.go()
                 })
