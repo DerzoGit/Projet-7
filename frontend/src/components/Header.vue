@@ -20,6 +20,7 @@ export default {
         logOut() {
             localStorage.removeItem("userToken")
             localStorage.removeItem("userId")
+            localStorage.removeItem("userRole")
         }
     }
 }
