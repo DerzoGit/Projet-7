@@ -1,6 +1,6 @@
 <template>
     <div id="nav">
-        <router-link to="/feed">Feed</router-link> |
+        <router-link to="/">Feed</router-link> |
         <router-link to="/about">About</router-link> |
         <router-link to="/signup" v-if="!userToken">Inscription</router-link> |
         <router-link to="/login" v-if="!userToken">Connexion</router-link>
