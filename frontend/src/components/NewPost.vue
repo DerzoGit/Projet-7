@@ -37,7 +37,6 @@ export default {
             this.axios.post(`http://localhost:3000/api/post/`, postForm, {
                     headers: {
                         Authorization: `Bearer ${this.token}`,
-                        "Content-Type": "multipart/form-data; boundary=<calculated when request is sent>"
                     }
                 })
                 .then((res) => {
