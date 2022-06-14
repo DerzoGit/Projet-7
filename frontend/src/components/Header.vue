@@ -2,9 +2,10 @@
     <div id="nav">
         <router-link to="/">Feed</router-link> |
         <router-link to="/about">About</router-link> |
-        <router-link to="/signup" v-if="!userToken">Inscription</router-link> |
-        <router-link to="/login" v-if="!userToken">Connexion</router-link>
-        <a href="" v-else @click="logOut()">Déconnexion</a>
+        <router-link to="/signup" v-if="!token">Inscription</router-link> |
+        <router-link to="/login" v-if="!token">Connexion</router-link>
+        <button v-else @click="logOut()">Déconnexion</button> |
+        <button v-if="token" @click.prevent="deleteAccount()">Supprimer le compte</button>
     </div>
 </template>
 
@@ -13,7 +14,8 @@ export default {
     name: "Header",
     data() {
         return {
-            userToken: localStorage.getItem("userToken")
+            token: localStorage.getItem("userToken"),
+            userId: localStorage.getItem("userId")
         }
     },
     methods: {
@@ -21,6 +23,22 @@ export default {
             localStorage.removeItem("userToken")
             localStorage.removeItem("userId")
             localStorage.removeItem("userRole")
+        },
+        deleteAccount() {
+            this.axios.delete(`http://localhost:3000/api/user/${this.userId}`, {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            .then((res) => {
+                this.logOut()
+                this.$router.push({ name: "SignUp" })
+                this.$router.go()
+                console.log(res)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
         }
     }
 }
