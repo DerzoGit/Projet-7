@@ -2,10 +2,6 @@
     <div>
         <h1>Bienvenue sur Groupomania. Inscrivez-vous !</h1>
         <div>
-            <div>
-                <router-link to="/signup">Inscription</router-link> |
-                <router-link to="/login">Connexion</router-link>
-            </div>
             <form>
                 <label for="lastName">Nom :</label>
                 <input type="text" placeholder="Nom" v-model="lastName">
