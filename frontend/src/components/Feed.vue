@@ -27,29 +27,29 @@ export default {
     },
     data() {
         return {
-            comments: [],
+            // comments: [],
             token: localStorage.getItem("userToken"),
             userId: localStorage.getItem("userId")
         }
     },
     methods: {
-        displayComment() {
-            this.axios.get(`http://localhost:3000/api/comment`, {
-                headers: {
-                    Authorization: `Bearer ${this.token}`
-                }
-            })
-            .then((res) => {
-                this.comments = res.data
-                console.log(res)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        }
+        // displayComment() {
+        //     this.axios.get(`http://localhost:3000/api/comment`, {
+        //         headers: {
+        //             Authorization: `Bearer ${this.token}`
+        //         }
+        //     })
+        //     .then((res) => {
+        //         this.comments = res.data
+        //         console.log(res)
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //     })
+        // }
     },
     mounted() {
-            this.displayComment();
+            // this.displayComment();
     }
 }
 </script>
