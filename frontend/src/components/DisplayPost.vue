@@ -12,8 +12,8 @@
                 <div v-if="displayUpdate">
                     <div>
                         <form method="post" enctype="multipart/form-data">                
-                            <input type="text" v-model="post.title">
-                            <input type="text" v-model="post.content">
+                            <input type="text" v-model="title">
+                            <input type="text" v-model="content">
                             <label for="image">Ajouter une image</label>
                             <input type="file" @change="addMedia" ref="mediaInput">
                             <button @click.prevent="$refs.mediaInput.click()">Modifier l'image</button>
@@ -23,18 +23,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div v-if="displayUpdate">
-                <p>{{ post.User.firstName }} {{ post.User.lastName }}</p>
-                <p>{{ post.userId }}</p>
-                <p>{{ post.title }}</p>
-                <p>{{ post.content }}</p>
-                <img :src="post.media">
-                <button v-if="userId == post.userId" @click.prevent="deletePost(post.id)">Supprimer</button>
-                <UpdatePost/>
-            </div> -->
-        
         </div>
-        
     </div>
 </template>
 
@@ -49,6 +38,9 @@ export default {
     data() {
         return {
             posts: [],
+            title:"",
+            content:"",
+            media:null,
             displayUpdate: false,
             token: localStorage.getItem("userToken"),
             userId: localStorage.getItem("userId"),
