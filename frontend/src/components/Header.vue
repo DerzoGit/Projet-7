@@ -1,11 +1,11 @@
 <template>
-    <div id="nav">
-        <router-link to="/">Feed</router-link> |
-        <router-link to="/about">About</router-link> |
-        <router-link to="/signup" v-if="!token">Inscription</router-link> |
-        <router-link to="/login" v-if="!token">Connexion</router-link>
-        <button v-else @click="logOut()">Déconnexion</button> |
-        <button v-if="token" @click.prevent="deleteAccount()">Supprimer le compte</button>
+    <div class="nav">
+        <router-link to="/" class="nav__element">Feed</router-link>
+        <!-- <router-link to="/about" class="nav-element">About</router-link> -->
+        <router-link to="/signup" v-if="!token" class="nav__element">Inscription</router-link>
+        <router-link to="/login" v-if="!token" class="nav__element">Connexion</router-link>
+        <button v-else @click="logOut()" class="nav__element">Déconnexion</button>
+        <button v-if="token" @click.prevent="deleteAccount()" class="nav__element">Supprimer le compte</button>
     </div>
 </template>
 
@@ -23,6 +23,7 @@ export default {
             localStorage.removeItem("userToken")
             localStorage.removeItem("userId")
             localStorage.removeItem("userRole")
+            this.$router.go()
         },
         deleteAccount() {
             this.axios.delete(`http://localhost:3000/api/user/${this.userId}`, {
@@ -45,24 +46,41 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-}
-
-#nav {
-    padding: 30px;
+.nav {
+    padding: 1.8rem;
+    font-size: 1.2rem;
 
     a {
-        font-weight: bold;
-        color: #2c3e50;
+        font-weight: 400;
+        color: white;
+        text-decoration: none;
 
-    &.router-link-exact-active {
-        color: #42b983;
+        &.router-link-exact-active {
+            color: #fd2b01;
+        }
     }
+
+    &__element {
+        margin: 0.4rem;
+    }
+
+    & button {
+        outline: none;
+        background: #FD2D01;
+        border: none;
+        border-radius: 0.4rem;
+        padding: 0.4rem;
+        color: #FFFFFF;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 400;
+        cursor: pointer;
+        transition: 0.3s ease;
+        
+        &:hover {
+            background: #FFD7D7;
+            color: black;
+        }
     }
 }
 </style>
