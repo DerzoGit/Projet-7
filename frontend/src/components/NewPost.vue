@@ -1,15 +1,105 @@
 <template>
-    <div>
+    <div class="new-post">
         <form method="post" enctype="multipart/form-data">
-            <input type="text" placeholder="What's up title ?" v-model="title">
-            <input type="text" placeholder="What's up people ?" v-model="content">
-            <label for="image">Ajouter une image</label>
-            <input type="file" @change="addMedia" ref="mediaInput">
-            <button @click.prevent="$refs.mediaInput.click()">Ajouter une image</button>
-            <button type="submit" @click.prevent="createPost">Créer un post</button>
+            <div class="new-post__group">
+                <input type="text" placeholder="What's up title ?" v-model="title">
+            </div>
+            <div class="new-post__group new-post__group--content">
+                <input type="text" placeholder="What's up people ?" v-model="content">
+            </div>
+            <div class="new-post__group new-post__group--hide">
+                <label for="image">Ajouter une image</label>
+                <input type="file" @change="addMedia" ref="mediaInput">
+            </div>
+            <div class="new-post__group">
+                <button @click.prevent="$refs.mediaInput.click()">Ajouter une image</button>
+            </div>
+            <div class="new-post__group">
+                <button type="submit" @click.prevent="createPost">Créer un post</button>
+            </div>
         </form>
     </div>
 </template>
+
+<style lang="scss" scoped>
+.new-post {
+    background: #292929;
+    width: 18rem;
+    border-radius: 0.4rem;
+    box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+    margin: 1rem auto;
+    padding: 1rem;
+
+    &__group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 0 0 1.2rem;
+        &--hide {
+            display: none;
+        }
+        & label {
+            display: block;
+            margin: 0 0 0.7rem;
+            font-size: 0.8rem;
+            font-weight: 400;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        & input {
+            outline: none;
+            display: block;
+            width: 100%;
+            border: none;
+            border-radius: 0.4rem;
+            box-sizing: border-box;
+            padding: 0.7rem 1.2rem;
+            font-size: inherit;
+            font-weight: 500;
+            line-height: inherit;
+            transition: 0.3s ease;
+            &:focus {
+                color: rgba(0, 0, 0, 0.8);
+            }
+        }
+        &--content {
+            height: 5rem;
+        }
+        & button {
+            outline: none;
+            background: #FD2D01;
+            width: 100%;
+            border: none;
+            border-radius: 0.4rem;
+            padding: 0.7rem 1.2rem;
+            color: #FFFFFF;
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: 500;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s ease;
+
+            &:hover {
+            background: #FFD7D7;
+            color: black;
+            }
+        }
+    }
+
+    @media screen and (min-width: 500px) {
+        width: 30rem;
+    }
+    @media screen and (min-width: 768px) {
+        width: 40rem;
+    }
+    @media screen and (min-width: 1024px) {
+        width: 60rem;
+    }
+}
+</style>
 
 <script>
 export default {
@@ -51,6 +141,3 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
