@@ -47,7 +47,6 @@
     width: 18rem;
     border-radius: 0.4rem;
     box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.1);
-    box-sizing: border-box;
     margin: 1rem auto;
     padding: 0.5rem;
 

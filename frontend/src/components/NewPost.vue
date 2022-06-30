@@ -27,7 +27,6 @@
     width: 18rem;
     border-radius: 0.4rem;
     box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.1);
-    box-sizing: border-box;
     margin: 1rem auto;
     padding: 1rem;
 
@@ -54,7 +53,6 @@
             width: 100%;
             border: none;
             border-radius: 0.4rem;
-            box-sizing: border-box;
             padding: 0.7rem 1.2rem;
             font-size: inherit;
             font-weight: 500;
