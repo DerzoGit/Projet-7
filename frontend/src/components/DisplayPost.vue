@@ -16,86 +16,46 @@
                         <p>{{ post.content }}</p>
                     </div>
                     <div class="post__group">
-                        <img :src="post.media">
+                        <img :src="post.media" class="post__group__media">
                     </div>
                 <!-- </div> -->
                 <div class="post__group">
+                    <button v-if="userId == post.userId" @click.prevent="displayUpdatePost(post.id)">Modifier</button>
+                </div>
+                <div class="post__group">
                     <button v-if="userId == post.userId || userRole == 'Admin'" @click.prevent="deletePost(post.id)">Supprimer</button>
                 </div>
-                <button v-if="userId == post.userId" @click.prevent="displayUpdatePost(post.id)">Modifier</button>
+                
                 <div v-if="displayUpdate == post.id">
-                    <div>
-                        <form method="post" enctype="multipart/form-data">                
-                            <input type="text" v-model="post.title">
-                            <input type="text" v-model="content">
-                            <label for="image">Ajouter une image</label>
-                            <input type="file" @change="addMedia" ref="mediaInput">
-                            <button @click.prevent="$refs.mediaInput.click()">Modifier l'image</button>
-                            <button type="submit" @click.prevent="updatePost(post.id), hideUpdatePost()">Modifier</button>
+                    <div class="post post__update">
+                        <form method="post" enctype="multipart/form-data">        
+                            <div class="post__group">
+                                <input type="text" v-model="title">
+                            </div>    
+                            <div class="post__group">
+                                <input type="text" v-model="content">
+                            </div>
+                            <div class="post__group">
+                                <label for="image">Ajouter une image</label>
+                                <input type="file" @change="addMedia" ref="mediaInput">
+                            </div>    
+                            <div class="post__group">
+                                <button @click.prevent="$refs.mediaInput.click()">Modifier l'image</button>
+                            </div>
+                            <div class="post__group">
+                                <button type="submit" @click.prevent="updatePost(post.id), hideUpdatePost()">Modifier le post</button>
+                            </div>
                         </form>
-                        <button @click="hideUpdatePost()">Annuler</button>
+                        <div class="post__group">
+                            <button @click="hideUpdatePost()">Annuler</button>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
-<style lang="scss" scoped>
-.post {
-    background: #292929;
-    width: 18rem;
-    border-radius: 0.4rem;
-    box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.1);
-    margin: 1rem auto;
-    padding: 0.5rem;
-
-    &__group {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin: 0 0 1.2rem 0;
-        & p {
-            display: block;
-            margin: 0 0 0.7rem;
-            font-size: 0.8rem;
-            font-weight: 400;
-            line-height: 1;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-        }
-        & button {
-            background: #FD2D01;
-            width: 50%;
-            border: none;
-            border-radius: 0.4rem;
-            padding: 0.7rem 1.2rem;
-            color: #FFFFFF;
-            font-family: inherit;
-            font-size: inherit;
-            font-weight: 500;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s ease;
-
-            &:hover {
-            background: #FFD7D7;
-            color: black;
-            }
-        }
-    }
-
-    @media screen and (min-width: 500px) {
-        width: 30rem;
-    }
-    @media screen and (min-width: 768px) {
-        width: 40rem;
-    }
-    @media screen and (min-width: 1024px) {
-        width: 60rem;
-    }
-}
-</style>
 
 <script>
 // import UpdatePost from "@/components/UpdatePost.vue"
@@ -108,9 +68,9 @@ export default {
     data() {
         return {
             posts: [],
-            title:"",
-            content:"",
-            media:null,
+            title: "",
+            content: "",
+            media: null,
             displayUpdate: "",
             token: localStorage.getItem("userToken"),
             userId: localStorage.getItem("userId"),
@@ -154,7 +114,7 @@ export default {
             console.log(this.displayUpdate)
         },
         hideUpdatePost() {
-            this.displayUpdate = false
+            this.displayUpdate = null
             console.log(this.displayUpdate)
         },
         addMedia(e) {
@@ -162,8 +122,6 @@ export default {
         },
         updatePost(id) {
             const updateForm = new FormData()
-            updateForm.append("userId", this.userId)
-            console.log(this.userId)
             updateForm.append("title", this.title)
             console.log(this.title)
             updateForm.append("content", this.content)
@@ -191,3 +149,88 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+.post {
+    background: #292929;
+    width: 18rem;
+    border-radius: 0.4rem;
+    box-shadow: 0 0 0.5rem rgba(255, 255, 255, 0.1);
+    margin: 1rem auto;
+    padding: 0.5rem;
+
+    &__group {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0 0 1.2rem 0;
+        & p {
+            display: block;
+            margin: 0 0 0.7rem;
+            font-size: 0.8rem;
+            font-weight: 400;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        & button {
+            background: #FD2D01;
+            width: 50%;
+            border: none;
+            border-radius: 0.4rem;
+            padding: 0.7rem 1.2rem;
+            color: #FFFFFF;
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: 500;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s ease;
+
+            &:hover {
+            background: #FFD7D7;
+            color: black;
+            }
+        }
+        & input {
+            display: block;
+            width: 100%;
+            border: none;
+            border-radius: 0.4rem;
+            padding: 0.7rem 1.2rem;
+            font-size: inherit;
+            font-weight: 500;
+            line-height: inherit;
+            transition: 0.3s ease;
+            &:focus {
+                color: rgba(0, 0, 0, 0.8);
+            }
+        }
+        &__media {
+            max-width: 100%;
+        }
+    }
+
+    &__update {
+        width: 16rem;
+    }
+
+    @media screen and (min-width: 500px) {
+        width: 30rem;
+        &__update {
+            width: 28rem;
+        }
+    }
+    @media screen and (min-width: 768px) {
+        width: 40rem;
+        &__update {
+            width: 38rem;
+        }
+    }
+    @media screen and (min-width: 1024px) {
+        width: 60rem;
+        &__update {
+            width: 58rem;
+        }
+    }
+}
+</style>
