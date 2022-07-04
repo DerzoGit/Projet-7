@@ -48,7 +48,6 @@
             letter-spacing: 0.2em;
         }
         & input {
-            outline: none;
             display: block;
             width: 100%;
             border: none;
@@ -66,7 +65,6 @@
             height: 5rem;
         }
         & button {
-            outline: none;
             background: #FD2D01;
             width: 100%;
             border: none;

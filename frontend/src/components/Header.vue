@@ -65,7 +65,6 @@ export default {
     }
 
     & button {
-        outline: none;
         background: #FD2D01;
         border: none;
         border-radius: 0.4rem;
