@@ -5,20 +5,15 @@
                 <div class="post__group">
                     <p>{{ post.User.firstName }} {{ post.User.lastName }}</p>
                 </div>
-                <!-- <div class="post__group">
-                    <p>{{ post.userId }}</p>
-                </div> -->
                 <div class="post__group">
                     <p>{{ post.title }}</p>
                 </div>
-                <!-- <div class="post__group"> -->
                     <div class="post__group">
                         <p>{{ post.content }}</p>
                     </div>
                     <div class="post__group">
                         <img :src="post.media" class="post__group__media">
                     </div>
-                <!-- </div> -->
                 <div class="post__group">
                     <button v-if="userId == post.userId" @click.prevent="displayUpdatePost(post.id)">Modifier</button>
                 </div>
@@ -28,6 +23,9 @@
                 
                 <div v-if="displayUpdate == post.id">
                     <div class="post post__update">
+                        <div class="post__group">
+                            <p>Modification de post</p>
+                        </div>
                         <form method="post" enctype="multipart/form-data">        
                             <div class="post__group">
                                 <input type="text" v-model="title">
@@ -58,13 +56,8 @@
 </template>
 
 <script>
-// import UpdatePost from "@/components/UpdatePost.vue"
-
 export default {
     name: "DisplayPost",
-    components:  {
-        // UpdatePost
-    },
     data() {
         return {
             posts: [],
@@ -135,7 +128,7 @@ export default {
                 }
             })
             .then((res) => {
-                // this.$router.go()
+                this.$router.go()
                 console.log(res)
             })
             .catch((error) => {
