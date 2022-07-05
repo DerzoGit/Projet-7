@@ -14,31 +14,42 @@
                 </div>
                 <p v-if="errorMessage">{{ errorMessage }}</p>
                 <div class="login-form__group">
-                    <button type="submit" @click.prevent="login()">Se connecter</button>
+                    <button type="submit" @click.prevent="toggleModal, login()">Se connecter</button>
                 </div>
             </form>
+            <Modal :showModal="showModal" :toggleModal="toggleModal"><p>Vous êtes connecté</p></Modal>
         </div>
     </div>
 </template>
 
 <script>
+import Modal from '@/components/ModalBox.vue'
+
     export default {
         name: "LoginUser",
+        components: {
+            Modal
+        },
         data() {
             return {
                 email: "",
                 password: "",
-                errorMessage: ""
+                errorMessage: "",
+                showModal: false
             }
         },
         methods: {
+            toggleModal() {
+                this.showModal = !this.showModal
+            },
             login() {
                 this.axios.post(`http://localhost:3000/api/auth/login`, {
                     email: this.email,
                     password: this.password
                 })
                 .then((res) => {
-                    alert("Vous êtes connecté")
+                    this.toggleModal()
+                    // alert("Vous êtes connecté")
                     console.log(res, res.data.token, "Utilisateur bien connecté")
                     localStorage.setItem("userToken", res.data.token)
                     localStorage.setItem("userId", res.data.userId)
