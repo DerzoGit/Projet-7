@@ -15,40 +15,7 @@
                         <img :src="post.media" class="post__group__media">
                     </div>
                 <div class="post__group">
-                    <button v-if="userId == post.userId" @click.prevent="displayUpdatePost(post.id)">Modifier</button>
-                </div>
-                <div class="post__group">
                     <button v-if="userId == post.userId || userRole == 'Admin'" @click.prevent="deletePost(post.id)">Supprimer</button>
-                </div>
-                
-                <div v-if="displayUpdate == post.id">
-                    <div class="post post__update">
-                        <div class="post__group">
-                            <p>Modification de post</p>
-                        </div>
-                        <form method="post" enctype="multipart/form-data">        
-                            <div class="post__group">
-                                <input type="text" v-model="title">
-                            </div>    
-                            <div class="post__group">
-                                <input type="text" v-model="content">
-                            </div>
-                            <div class="post__group">
-                                <label for="image">Ajouter une image</label>
-                                <input type="file" @change="addMedia" ref="mediaInput">
-                            </div>    
-                            <div class="post__group">
-                                <button @click.prevent="$refs.mediaInput.click()">Modifier l'image</button>
-                            </div>
-                            <div class="post__group">
-                                <button type="submit" @click.prevent="updatePost(post.id), hideUpdatePost()">Modifier le post</button>
-                            </div>
-                        </form>
-                        <div class="post__group">
-                            <button @click="hideUpdatePost()">Annuler</button>
-                        </div>
-                        
-                    </div>
                 </div>
             </div>
         </div>
@@ -64,7 +31,6 @@ export default {
             title: "",
             content: "",
             media: null,
-            displayUpdate: "",
             token: localStorage.getItem("userToken"),
             userId: localStorage.getItem("userId"),
             userRole: localStorage.getItem("userRole")
@@ -96,39 +62,6 @@ export default {
             })
             .then((res) => {
                 location.reload()
-                console.log(res)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        },
-        displayUpdatePost(id) {
-            this.displayUpdate = id
-            console.log(this.displayUpdate)
-        },
-        hideUpdatePost() {
-            this.displayUpdate = null
-            console.log(this.displayUpdate)
-        },
-        addMedia(e) {
-            this.media = e.target.files[0];
-        },
-        updatePost(id) {
-            const updateForm = new FormData()
-            updateForm.append("title", this.title)
-            console.log(this.title)
-            updateForm.append("content", this.content)
-            console.log(this.content)
-            updateForm.append("media", this.media)
-            console.log(this.media)
-            console.log(updateForm)
-            this.axios.put(`http://localhost:3000/api/post/${id}`, updateForm, {
-                headers: {
-                    Authorization: `Bearer ${this.token}`
-                }
-            })
-            .then((res) => {
-                this.$router.go()
                 console.log(res)
             })
             .catch((error) => {
@@ -184,46 +117,18 @@ export default {
             color: black;
             }
         }
-        & input {
-            display: block;
-            width: 100%;
-            border: none;
-            border-radius: 0.4rem;
-            padding: 0.7rem 1.2rem;
-            font-size: inherit;
-            font-weight: 500;
-            line-height: inherit;
-            transition: 0.3s ease;
-            &:focus {
-                color: rgba(0, 0, 0, 0.8);
-            }
-        }
         &__media {
             max-width: 100%;
         }
     }
-
-    &__update {
-        width: 16rem;
-    }
-
     @media screen and (min-width: 500px) {
         width: 30rem;
-        &__update {
-            width: 28rem;
-        }
     }
     @media screen and (min-width: 768px) {
         width: 40rem;
-        &__update {
-            width: 38rem;
-        }
     }
     @media screen and (min-width: 1024px) {
         width: 60rem;
-        &__update {
-            width: 58rem;
-        }
     }
 }
 </style>
