@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- Ajout du Header & Footer sur la page, avec utilisation du routeur pour l'affichage de la page -->
     <Header/>
     <router-view/>
     <Footer/>
@@ -7,6 +8,7 @@
 </template>
 
 <script>
+// Import du Header & Footer
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 
