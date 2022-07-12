@@ -3,6 +3,7 @@
         <h1>Bienvenue sur Groupomania.</h1>
         <div class="login-form">
             <h2>Connectez-vous !</h2>
+            <!-- Formulaire de connexion mail & pass -->
             <form>
                 <div class="login-form__group">
                     <label for="email">Mail :</label>
@@ -12,7 +13,9 @@
                     <label for="password">Mot de Passe :</label>
                     <input type="password" placeholder="Mot de passe" v-model="password">
                 </div>
+                <!-- Affichage si message d'erreur -->
                 <p v-if="errorMessage">{{ errorMessage }}</p>
+                <!-- Bouton d'envoi du formulaire, avec requête de login -->
                 <div class="login-form__group">
                     <button type="submit" @click.prevent="login()">Se connecter</button>
                 </div>
@@ -32,13 +35,13 @@
             }
         },
         methods: {
+            // Requête post de connexion
             login() {
                 this.axios.post(`http://localhost:3000/api/auth/login`, {
                     email: this.email,
                     password: this.password
                 })
                 .then((res) => {
-                    alert("Vous êtes connecté")
                     localStorage.setItem("userToken", res.data.token)
                     localStorage.setItem("userId", res.data.userId)
                     localStorage.setItem("userRole", res.data.userRole)
