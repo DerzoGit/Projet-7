@@ -13,6 +13,7 @@ export default {
         }
     },
     computed: {
+        // Création d'un copyright avec incrémentation de la date
         copyright: () => {
 			const currentYear = new Date().getFullYear()
 
