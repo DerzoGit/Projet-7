@@ -42,9 +42,11 @@
                     password: this.password
                 })
                 .then((res) => {
+                    // Set les info de connexion de l'utilisateur dans le LS 
                     localStorage.setItem("userToken", res.data.token)
                     localStorage.setItem("userId", res.data.userId)
                     localStorage.setItem("userRole", res.data.userRole)
+                    // Renvoi vers le feed et actualise pour le header
                     this.$router.push({ name: "Feed" })
                     this.$router.go()
                 })
