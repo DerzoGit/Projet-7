@@ -1,10 +1,15 @@
+// Import express, controle API node.js
 const express = require("express");
+// création d'un app express
 const app = express();
+// Import cors pour gérer les accès à l'API
 const cors = require("cors");
+// Import path, donne accès au chemin de système de fichier
 const path = require("path");
+// Import helmet, sécurisation express app
 const helmet = require("helmet");
 
-
+// Import des différentes routes utilisées
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
