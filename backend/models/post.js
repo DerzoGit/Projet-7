@@ -1,11 +1,10 @@
-const { Sequelize, Model, DataTypes } = require("sequelize");
+// Import sequelize
+const { Model, DataTypes } = require("sequelize");
+// Import connexion DB
 const sequelize = require("../config/db");
 
+// Initialisation du model de post
 class Post extends Model {
-    // static associate(models) {
-    //     Post.belongsTo(models.User, { foreignKey: "userId" }, { onDelete: "cascade" });
-    //     Post.hasMany(models.Comment, { onDelete: "cascade" });
-    // }
 };
 
 Post.init({
