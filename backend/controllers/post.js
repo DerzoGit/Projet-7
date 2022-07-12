@@ -3,13 +3,17 @@ const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
     const postObject = req.body;
-    const post = new db.Post({
-        ...postObject,
-        media: (req.file ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : null)
-    });
-    post.save()
-    .then(() => res.status(201).json({ message: "Le post a bien été créé" }))
-    .catch(error => res.status(400).json({ error }))
+    if(postObject.title.length >= 1 && postObject.content.length >= 1) {
+        const post = new db.Post({
+            ...postObject,
+            media: (req.file ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : null)
+        });
+        post.save()
+        .then(() => res.status(201).json({ message: "Le post a bien été créé" }))
+        .catch(error => res.status(400).json({ error }))
+    } else {
+        res.status(400).json({ error: "Le titre et le message ne peuvent être vides." })
+    }
 }
 
 
