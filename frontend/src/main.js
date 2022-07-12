@@ -2,6 +2,7 @@
 import Vue from 'vue'
 // Import de l'App Vue
 import App from './App.vue'
+// Import du routeur pour les pages
 import router from './router'
 // Import d'axios pour réaliser les requêtes backend
 import axios from 'axios'
