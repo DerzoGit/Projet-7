@@ -1,6 +1,9 @@
+// Import de passwordValidator pour vérification des password
 const passwordValidator = require("password-validator")
+// Import de emailValidator pour vérification des mails
 const emailValidator = require("email-validator")
 
+// Vérification si le password correspond au schema donné et si l'email est valide
 exports.checkValid = (req, res, next) => {
     const passwordSchema = new passwordValidator();
     passwordSchema
@@ -19,6 +22,7 @@ exports.checkValid = (req, res, next) => {
     }
 }
 
+// Vérification si le nom et prénom de l'utilisateur sont valides
 exports.checkName = (req, res, next) => {
     const nameRegex = /^[a-zA-ZÀ-ÿ .,'-]+$/
     const firstName = req.body.firstName
@@ -26,6 +30,6 @@ exports.checkName = (req, res, next) => {
     if(nameRegex.test(firstName) === true && nameRegex.test(lastName) === true) {
         next()
     } else {
-        return res.status(400).json({ error: "Veuillez vérifier le format de votre nom et de votre prénom, ils ne peuvent contenir de chiffres." })
+        return res.status(400).json({ error: "Veuillez vérifier le format de votre nom et de votre prénom, ils ne peuvent contenir de chiffres" })
     }
 }
