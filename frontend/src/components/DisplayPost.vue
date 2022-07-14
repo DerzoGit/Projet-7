@@ -12,8 +12,8 @@
                     <div class="post__group">
                         <p>{{ post.content }}</p>
                     </div>
-                    <div class="post__group">
-                        <img :src="post.media" class="post__group__media">
+                    <div class="post__group" v-if="post.media">
+                        <img :src="post.media" class="post__group__media" alt="Image postée par l'auteur du post">
                     </div>
                 <div class="post__group">
                     <!-- Affichage button de suppression si auteur du post ou admin -->
@@ -104,7 +104,7 @@ export default {
             border: none;
             border-radius: 0.4rem;
             padding: 0.7rem 1.2rem;
-            color: #FFFFFF;
+            color: #000;
             font-family: inherit;
             font-size: inherit;
             font-weight: 500;
