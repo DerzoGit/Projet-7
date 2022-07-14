@@ -8,6 +8,8 @@ const cors = require("cors");
 const path = require("path");
 // Import helmet, sécurisation express app
 const helmet = require("helmet");
+// Import dotenv, variable d'envrionnement pour ne pas afficher des informations de sécurités par exemple
+require("dotenv").config();
 
 // Import des différentes routes utilisées
 const authRoutes = require("./routes/auth");
