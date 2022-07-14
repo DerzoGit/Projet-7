@@ -108,7 +108,7 @@
             border: none;
             border-radius: 0.4rem;
             padding: 0.7rem 1.2rem;
-            color: #FFFFFF;
+            color: #000;
             font-family: inherit;
             font-size: inherit;
             font-weight: 500;
@@ -119,7 +119,6 @@
 
             &:hover {
             background: #FFD7D7;
-            color: black;
             }
         }
     }
