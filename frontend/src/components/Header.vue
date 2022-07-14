@@ -68,10 +68,11 @@ export default {
 
     & button {
         background: #FD2D01;
+        // background: #FE9985;
         border: none;
         border-radius: 0.4rem;
         padding: 0.4rem;
-        color: #FFFFFF;
+        color: #000;
         font-family: inherit;
         font-size: 1rem;
         font-weight: 400;
