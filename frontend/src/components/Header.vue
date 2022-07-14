@@ -81,7 +81,6 @@ export default {
         
         &:hover {
             background: #FFD7D7;
-            color: black;
         }
     }
     &__mobile {
