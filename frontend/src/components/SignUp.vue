@@ -3,6 +3,7 @@
         <h1>Bienvenue sur Groupomania.</h1>
         <div class="signup-form">
             <h2>Inscrivez-vous !</h2>
+            <!-- Formulaire d'inscription de l'utilisateur, Nom-Prénom-Mail-Pass -->
             <form>
                 <div class="signup-form__group">
                     <label for="lastName">Nom :</label>
@@ -20,7 +21,9 @@
                     <label for="password">Mot de Passe :</label>
                     <input type="password" placeholder="Mot de passe" v-model="password">
                 </div>
+                <!-- Affichage si message d'erreur -->
                 <p v-if="errorMessage">{{ errorMessage }}</p>
+                <!-- Bouton d'envoi du formulaire, avec requête de signup -->
                 <div class="signup-form__group">
                     <button type="submit" @click.prevent="signup()">Créer un compte</button>
                 </div>
@@ -42,6 +45,7 @@
             }
         },
         methods: {
+            // Requête post création d'un utilisateur
             signup() {
                 this.axios.post(`http://localhost:3000/api/auth/signup`, {
                     lastName: this.lastName,
@@ -49,14 +53,12 @@
                     email: this.email,
                     password: this.password
                 })
-                .then((res) => {
-                    alert("Votre compte a bien été créé")
+                .then(() => {
+                    // Renvoi vers la page de connexion à la finalisation d'inscription
                     this.$router.push({ name: "Login" })
-                    console.log(res, "Utilisateur bien créé")
                 })
                 .catch((error) => {
                     this.errorMessage = error.response.data.error
-                    console.log(this.errorMessage)
                 })
             }
         }
