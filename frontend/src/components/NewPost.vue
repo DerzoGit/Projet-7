@@ -3,10 +3,12 @@
         <!-- Formulaire d'envoi de nouveau post -->
         <form method="post" enctype="multipart/form-data">
             <div class="new-post__group">
-                <input type="text" placeholder="Titre" v-model="title">
+                <label for="title">Titre :</label>
+                <input type="text" name="title" placeholder="Titre" v-model="title">
             </div>
             <div class="new-post__group new-post__group--content">
-                <input type="text" placeholder="Contenu à partager" v-model="content">
+                <label for="content">Contenu :</label>
+                <input type="text" name="content" placeholder="Contenu à partager" v-model="content">
             </div>
             <!-- Affichage si message d'erreur -->
             <p v-if="errorMessage">{{ errorMessage }}</p>
@@ -118,7 +120,7 @@ export default {
             border: none;
             border-radius: 0.4rem;
             padding: 0.7rem 1.2rem;
-            color: #FFFFFF;
+            color: #000;
             font-family: inherit;
             font-size: inherit;
             font-weight: 500;
@@ -128,7 +130,6 @@ export default {
 
             &:hover {
             background: #FFD7D7;
-            color: black;
             }
         }
     }
