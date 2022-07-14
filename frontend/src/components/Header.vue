@@ -1,9 +1,10 @@
 <template>
     <div class="nav">
         <router-link to="/" class="nav__element">Feed</router-link>
+        <!-- Affichage de l'inscription/connexion si l'utilisateur n'est pas connecté, sinon affichage déconnexion/suppression compte -->
         <router-link to="/signup" v-if="!token" class="nav__element">Inscription</router-link>
         <router-link to="/login" v-if="!token" class="nav__element">Connexion</router-link>
-        <button v-else @click="logOut()" class="nav__element">Déconnexion</button>
+        <button v-else @click="logOut()" class="nav__element"><span class="nav__desktop">Déconnexion</span><i class="fa-solid fa-power-off nav__mobile"></i></button>
         <button v-if="token" @click.prevent="deleteAccount()" class="nav__element">Supprimer le compte</button>
     </div>
 </template>
@@ -18,26 +19,28 @@ export default {
         }
     },
     methods: {
+        // Clear du localStorage à la déconnexion
         logOut() {
             localStorage.removeItem("userToken")
             localStorage.removeItem("userId")
             localStorage.removeItem("userRole")
             this.$router.go()
         },
+
+        // Requête delete du compte de l'utilisateur, comprenant ses posts et autres
         deleteAccount() {
             this.axios.delete(`http://localhost:3000/api/user/${this.userId}`, {
                 headers: {
                     Authorization: `Bearer ${this.token}`
                 }
             })
-            .then((res) => {
+            .then(() => {
+                // Après suppression, déconnexion et renvoi vers la page d'inscription avec actualisation pour le header
                 this.logOut()
                 this.$router.push({ name: "SignUp" })
                 this.$router.go()
-                console.log(res)
             })
-            .catch((error) => {
-                console.log(error)
+            .catch(() => {
             })
         }
     }
@@ -46,7 +49,7 @@ export default {
 
 <style lang="scss">
 .nav {
-    padding: 1.8rem;
+    padding: 1.6rem;
     font-size: 1.2rem;
 
     a {
@@ -78,6 +81,17 @@ export default {
         &:hover {
             background: #FFD7D7;
             color: black;
+        }
+    }
+    &__mobile {
+        @media screen and (min-width: 768px) {
+            display: none;
+        }
+    }
+    &__desktop {
+        display: none;
+        @media screen and (min-width: 768px) {
+            display: inline;
         }
     }
 }
