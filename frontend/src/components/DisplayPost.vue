@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- Affichage pour chaque post identité utilisateur, titre, contenu et image si présente-->
         <div v-for="post in posts" :key="post.postId">
             <div class="post">
                 <div class="post__group">
@@ -15,7 +16,8 @@
                         <img :src="post.media" class="post__group__media">
                     </div>
                 <div class="post__group">
-                    <button v-if="userId == post.userId || userRole == 'Admin'" @click.prevent="deletePost(post.id)">Supprimer</button>
+                    <!-- Affichage button de suppression si auteur du post ou admin -->
+                    <button v-if="userId == post.userId || userRole == 'Admin'" @click.prevent="deletePost(post.id)"><span class="post__group__desktop">Supprimer</span><i class="fa-solid fa-trash-can post__group__mobile"></i></button>
                 </div>
             </div>
         </div>
@@ -28,19 +30,18 @@ export default {
     data() {
         return {
             posts: [],
-            title: "",
-            content: "",
-            media: null,
             token: localStorage.getItem("userToken"),
             userId: localStorage.getItem("userId"),
             userRole: localStorage.getItem("userRole")
         }
     },
     methods: {
+        // Renvoi vers la connexion si pas connecté
         displayPost() {
             if(!this.token) {
                 this.$router.push({ name: "Login" })
             } else {
+            // Méthode get pour affichage de tous les posts
             this.axios.get(`http://localhost:3000/api/post/`, {
                 headers: {
                     Authorization: `Bearer ${this.token}`
@@ -48,28 +49,27 @@ export default {
             })
             .then((res) => {
                 this.posts = res.data
-                console.log(res)
             })
-            .catch((error) => {
-                console.log(error)
+            .catch(() => {
             })}
         },
+        // Méthode delete d'un post
         deletePost(id) {
             this.axios.delete(`http://localhost:3000/api/post/${id}`, {
                 headers: {
                     Authorization: `Bearer ${this.token}`
                 }
             })
-            .then((res) => {
+            .then(() => {
+                // Actualise la page pour ne plus voir le post supprimé
                 location.reload()
-                console.log(res)
             })
-            .catch((error) => {
-                console.log(error)
+            .catch(() => {
             })
         }
     },
     mounted() {
+        // Affichage des posts après requête
         this.displayPost()
     }
 }
@@ -119,6 +119,17 @@ export default {
         }
         &__media {
             max-width: 100%;
+        }
+        &__mobile {
+            @media screen and (min-width: 500px) {
+                display: none;
+            }
+        }
+        &__desktop {
+            display: none;
+            @media screen and (min-width: 501px) {
+                display: inline;
+            }
         }
     }
     @media screen and (min-width: 500px) {
