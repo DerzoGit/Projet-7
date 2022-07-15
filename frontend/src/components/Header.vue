@@ -1,6 +1,6 @@
 <template>
     <div class="nav">
-        <router-link to="/" class="nav__element">Feed</router-link>
+        <router-link to="/" v-if="token" class="nav__element">Feed</router-link>
         <!-- Affichage de l'inscription/connexion si l'utilisateur n'est pas connecté, sinon affichage déconnexion/suppression compte -->
         <router-link to="/signup" v-if="!token" class="nav__element">Inscription</router-link>
         <router-link to="/login" v-if="!token" class="nav__element">Connexion</router-link>
