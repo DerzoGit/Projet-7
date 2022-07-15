@@ -7,11 +7,11 @@
             <form>
                 <div class="login-form__group">
                     <label for="email">Mail :</label>
-                    <input type="email" placeholder="Mail" v-model="email">
+                    <input type="email" name="email" id="email" placeholder="Mail" v-model="email">
                 </div>
                 <div class="login-form__group">
                     <label for="password">Mot de Passe :</label>
-                    <input type="password" placeholder="Mot de passe" v-model="password">
+                    <input type="password" name="password" id="password" placeholder="Mot de passe" v-model="password">
                 </div>
                 <!-- Affichage si message d'erreur -->
                 <p v-if="errorMessage">{{ errorMessage }}</p>
