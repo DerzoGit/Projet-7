@@ -4,17 +4,17 @@
         <form method="post" enctype="multipart/form-data">
             <div class="new-post__group">
                 <label for="title">Titre :</label>
-                <input type="text" name="title" placeholder="Titre" v-model="title">
+                <input type="text" name="title" id="title" placeholder="Titre" v-model="title">
             </div>
             <div class="new-post__group new-post__group--content">
                 <label for="content">Contenu :</label>
-                <input type="text" name="content" placeholder="Contenu à partager" v-model="content">
+                <input type="text" name="content" id="content" placeholder="Contenu à partager" v-model="content">
             </div>
             <!-- Affichage si message d'erreur -->
             <p v-if="errorMessage">{{ errorMessage }}</p>
             <div class="new-post__group new-post__group--hide">
                 <label for="image">Ajouter une image</label>
-                <input type="file" @change="addMedia" ref="mediaInput">
+                <input type="file" name="image" id="image" @change="addMedia" ref="mediaInput">
             </div>
             <!-- Bouton avec ref pour l'ajout d'image -->
             <div class="new-post__group">
