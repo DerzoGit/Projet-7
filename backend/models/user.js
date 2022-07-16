@@ -1,11 +1,10 @@
-const { Sequelize, Model, DataTypes } = require("sequelize");
+// Import sequelize
+const { Model, DataTypes } = require("sequelize");
+// Import connexion DB
 const sequelize = require("../config/db");
 
+// Initialisation du model d'utilisateur
 class User extends Model {
-    // associate(models) {
-    //     User.hasMany(models.Post, { onDelete: "cascade" });
-    //     User.hasMany(models.Comment, { onDelete: "cascade" });
-    // }
 }
 
 User.init({
