@@ -38,7 +38,6 @@ export default {
                 // Après suppression, déconnexion et renvoi vers la page d'inscription avec actualisation pour le header
                 this.logOut()
                 this.$router.push({ name: "SignUp" })
-                this.$router.go()
             })
             .catch(() => {
             })
